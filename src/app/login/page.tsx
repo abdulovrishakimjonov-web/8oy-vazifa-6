@@ -34,15 +34,15 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-[#0B0B0F] text-white p-6">
-      <form onSubmit={onSubmit} className="w-full max-w-sm space-y-4 border border-white/10 rounded-2xl p-6 bg-white/5">
-        <h1 className="text-2xl font-semibold">Xush kelibsiz</h1>
-        <p className="text-white/70 text-sm">Hisobingizga kirish uchun email va parolni kiriting</p>
+    <div className="min-h-screen flex items-center justify-center bg-[#0C0A09] text-white p-6">
+      <form onSubmit={onSubmit} className="w-full max-w-[450px] space-y-4 border border-white/20 rounded-3xl p-8 bg-[#181616]">
+        <h1 className="text-3xl font-semibold text-center">Xush kelibsiz👋</h1>
+        <p className="text-white text-sm font-semibold text-center">Hisobingizga kirish uchun email va parolni kiriting</p>
 
         <div className="space-y-2">
-          <label className="text-sm text-white/80">Email</label>
+          <label className="text-sm text-white font-semibold">Email</label>
           <input
-            className="w-full rounded-xl bg-black/30 border border-white/10 px-4 py-3 outline-none"
+            className="w-full rounded-xl bg-[#2B323F] border border-white/70 px-4 py-2 outline-none"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             type="email"
@@ -53,7 +53,7 @@ export default function LoginPage() {
         <div className="space-y-2">
           <label className="text-sm text-white/80">Parol</label>
           <input
-            className="w-full rounded-xl bg-black/30 border border-white/10 px-4 py-3 outline-none"
+            className="w-full rounded-xl bg-[#2B323F] border border-white/70 px-4 py-2 outline-none"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             type="password"
@@ -65,7 +65,7 @@ export default function LoginPage() {
 
         <button
           disabled={loading}
-          className="w-full rounded-xl bg-white text-black py-3 font-medium disabled:opacity-60"
+          className="w-full rounded-xl bg-white text-black py-2 font-medium disabled:opacity-60"
         >
           {loading ? "Kirilmoqda..." : "Kirish"}
         </button>
