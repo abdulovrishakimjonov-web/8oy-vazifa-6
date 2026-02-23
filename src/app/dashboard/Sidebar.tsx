@@ -11,23 +11,23 @@ const MENU = [
   { href: "/dashboard/students", label: "Studentlar" },
   { href: "/dashboard/groups", label: "Guruhlar" },
   { href: "/dashboard/courses", label: "Kurslar" },
-  { href: "/dashboard/payments", label: "Payment" },
+  { href: "/dashboard/payments", label: "To'lovlar" },
 ];
 
-export default function Sidebar() {
+export default function Sidebar({ onNavigate }: { onNavigate?: () => void }) {
   const pathname = usePathname();
 
   return (
-    <aside className="w-[320px]  border-r border-white/10 bg-black/30">
+    <aside className="w-[320px] h-screen border-r border-white/10 bg-black/30 flex flex-col">
       <div className="p-6 border-b border-white/10">
         <div className="text-2xl font-bold">Admin CRM</div>
+        <div className="text-white/60 text-sm mt-1">Panel</div>
       </div>
 
-      <div className="p-4">
+      <div className="p-4 flex-1 overflow-auto">
         <div className="text-white/70 font-semibold mb-4">Menu</div>
 
-        {/* MUHIM: flex-col bo‘lsin */}
-        <nav className="">
+        <nav className="flex flex-col gap-3">
           {MENU.map((m) => {
             const active =
               pathname === m.href ||
@@ -37,6 +37,7 @@ export default function Sidebar() {
               <Link
                 key={m.href}
                 href={m.href}
+                onClick={onNavigate}
                 className={[
                   "flex items-center gap-3 px-4 py-3 rounded-xl border transition",
                   active
@@ -44,7 +45,7 @@ export default function Sidebar() {
                     : "border-white/10 hover:bg-white/5 hover:border-white/20",
                 ].join(" ")}
               >
-                <span className="text-[18px] font-medium">{m.label}</span>
+                <span className="text-[16px] font-medium">{m.label}</span>
               </Link>
             );
           })}
@@ -54,17 +55,13 @@ export default function Sidebar() {
 
         <div className="flex flex-col gap-3">
           <Link
-            href="/dashboard/settings"
-            className="px-4 py-3 rounded-xl border border-white/10 hover:bg-white/5 hover:border-white/20 transition"
-          >
-            Sozlamalar
-          </Link>
-          <Link
             href="/dashboard/profile"
+            onClick={onNavigate}
             className="px-4 py-3 rounded-xl border border-white/10 hover:bg-white/5 hover:border-white/20 transition"
           >
-            Profile
+            Profil
           </Link>
+
           <Link
             href="/logout"
             className="px-4 py-3 rounded-xl border border-white/10 hover:bg-white/5 hover:border-white/20 transition"
@@ -72,6 +69,10 @@ export default function Sidebar() {
             Chiqish
           </Link>
         </div>
+      </div>
+
+      <div className="p-4 border-t border-white/10 text-white/60 text-xs">
+        © {new Date().getFullYear()} Admin CRM
       </div>
     </aside>
   );

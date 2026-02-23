@@ -1,22 +1,20 @@
-export const API_BASE = process.env.NEXT_PUBLIC_API_URL || "";
-
-export async function apiFetch<T>(pathOrUrl: string, options: RequestInit = {}): Promise<T> {
-  const isFullUrl = /^https?:\/\//i.test(pathOrUrl);
-  const url = isFullUrl ? pathOrUrl : `${API_BASE}${pathOrUrl}`;
-
-  const res = await fetch(url, {
-    ...options,
+export async function apiFetch<T>(url: string, init?: RequestInit): Promise<T> {
+  const r = await fetch(url, {
+    ...init,
     headers: {
+      Accept: "application/json",
       "Content-Type": "application/json",
-      ...(options.headers || {}),
+      ...(init?.headers || {}),
     },
   });
 
-  const data = await res.json().catch(() => ({}));
+  const data = await r.json().catch(() => ({}));
 
-  if (!res.ok) {
-    const message = data?.message || data?.error || "Request failed";
-    throw new Error(message);
+  if (!r.ok) {
+    const msg =
+      (data && (data.message || data.error || data.detail)) ||
+      `HTTP ${r.status}`;
+    throw new Error(msg);
   }
 
   return data as T;

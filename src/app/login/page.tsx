@@ -16,18 +16,24 @@ export default function LoginPage() {
     setLoading(true);
 
     try {
-      const res = await fetch("https://admin-crm.onrender.com/api/auth/sign-in", {
+      // ✅ Login server route orqali (HttpOnly cookie set bo'ladi)
+      const res = await fetch("/api/auth/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, password }),
+        body: JSON.stringify({ email: email.trim(), password }),
       });
 
-      const data = await res.json().catch(() => ({}));
-      if (!res.ok) throw new Error(data?.message || "Login xato");
+      const data = await res.json().catch(() => ({} as any));
+
+      if (!res.ok) {
+        console.log("LOGIN ERROR:", data);
+        throw new Error(data?.message || "Login xato");
+      }
 
       router.push("/dashboard");
+      router.refresh();
     } catch (e: any) {
-      setErr(e.message || "Xatolik");
+      setErr(e?.message || "Xatolik");
     } finally {
       setLoading(false);
     }
@@ -35,9 +41,14 @@ export default function LoginPage() {
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-[#0C0A09] text-white p-6">
-      <form onSubmit={onSubmit} className="w-full max-w-[450px] space-y-4 border border-white/20 rounded-3xl p-8 bg-[#181616]">
+      <form
+        onSubmit={onSubmit}
+        className="w-full max-w-[450px] space-y-4 border border-white/20 rounded-3xl p-8 bg-[#181616]"
+      >
         <h1 className="text-3xl font-semibold text-center">Xush kelibsiz👋</h1>
-        <p className="text-white text-sm font-semibold text-center">Hisobingizga kirish uchun email va parolni kiriting</p>
+        <p className="text-white text-sm font-semibold text-center">
+          Hisobingizga kirish uchun email va parolni kiriting
+        </p>
 
         <div className="space-y-2">
           <label className="text-sm text-white font-semibold">Email</label>
