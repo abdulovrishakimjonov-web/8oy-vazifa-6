@@ -22,18 +22,12 @@ export default function LoginPage() {
         body: JSON.stringify({ email: email.trim(), password }),
       });
 
-<<<<<<< HEAD
-      const data = await res.json().catch(() => ({} as any));
-
-      if (!res.ok) {
-=======
       const data = await res.json().catch(() => ({}));
 
       if (!res.ok) {
-        // ✅ backend xatoni to‘liq ko‘ramiz
->>>>>>> 5541485 (news)
+        // backend xatoni ko‘ramiz
         console.log("LOGIN ERROR:", data);
-        throw new Error(data?.message || "Login xato");
+        throw new Error((data as any)?.message || "Login xato");
       }
 
       router.push("/dashboard");

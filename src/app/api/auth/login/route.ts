@@ -6,6 +6,9 @@ type LoginBody = { email: string; password: string };
 const BACKEND_URL =
   process.env.NEXT_PUBLIC_BACKEND_URL || "https://admin-crm.onrender.com";
 
+// URL ni to'g'ri yig'amiz (oxirida / bo'lsa ham muammo bo'lmasin)
+const BACKEND_LOGIN_URL = `${BACKEND_URL.replace(/\/$/, "")}/api/auth/sign-in`;
+
 export async function POST(req: Request) {
   try {
     const body = (await req.json().catch(() => null)) as LoginBody | null;
@@ -17,42 +20,32 @@ export async function POST(req: Request) {
       );
     }
 
-<<<<<<< HEAD
-    const r = await fetch(`${BACKEND_URL}https://admin-crm.onrender.com/api/auth/sign-in`, {
+    const r = await fetch(BACKEND_LOGIN_URL, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
         Accept: "application/json",
       },
-=======
-    const r = await fetch(BACKEND_LOGIN_URL, {
-      method: "POST",
-      headers: { "Content-Type": "application/json", Accept: "application/json" },
->>>>>>> 5541485 (news)
       body: JSON.stringify({
         email: body.email.trim(),
         password: body.password,
       }),
     });
 
-    const data = await r.json().catch(() => ({} as any));
+    const data = await r.json().catch(() => ({}));
 
     if (!r.ok) {
       return NextResponse.json(
-<<<<<<< HEAD
         {
           ok: false,
           status: r.status,
-          message: data?.message || data?.error || "Login xato",
+          message: (data as any)?.message || (data as any)?.error || "Login xato",
         },
-=======
-        { ok: false, status: r.status, message: data?.message || "Login xato" },
->>>>>>> 5541485 (news)
         { status: r.status }
       );
     }
 
-    const access = data?.access_token || data?.token;
+    const access = (data as any)?.access_token || (data as any)?.token;
     if (!access) {
       return NextResponse.json(
         { ok: false, message: "Token topilmadi (access_token/token)" },
@@ -65,32 +58,24 @@ export async function POST(req: Request) {
       sameSite: "lax",
       secure: process.env.NODE_ENV === "production",
       path: "/",
-<<<<<<< HEAD
       maxAge: 60 * 60 * 24, // 1 kun
-=======
-      maxAge: 60 * 60 * 24,
->>>>>>> 5541485 (news)
     });
 
-    if (data?.refresh_token) {
-      (await cookies()).set("refresh_token", data.refresh_token, {
+    if ((data as any)?.refresh_token) {
+      (await cookies()).set("refresh_token", (data as any).refresh_token, {
         httpOnly: true,
         sameSite: "lax",
         secure: process.env.NODE_ENV === "production",
         path: "/",
-        maxAge: 60 * 60 * 24 * 30,
+        maxAge: 60 * 60 * 24 * 30, // 30 kun
       });
     }
 
-    return NextResponse.json({ ok: true, user: data?.user ?? null });
+    return NextResponse.json({ ok: true, user: (data as any)?.user ?? null });
   } catch (e: any) {
     return NextResponse.json(
       { ok: false, message: e?.message || "Server xatolik" },
       { status: 500 }
     );
   }
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> 5541485 (news)
