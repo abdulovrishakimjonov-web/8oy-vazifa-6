@@ -17,7 +17,7 @@ export async function POST(req: Request) {
       );
     }
 
-    const r = await fetch(`${BACKEND_URL}/api/auth/sign-in`, {
+    const r = await fetch(`${BACKEND_URL}https://admin-crm.onrender.com/api/auth/sign-in`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

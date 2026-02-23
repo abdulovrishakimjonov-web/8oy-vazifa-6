@@ -16,8 +16,7 @@ export default function LoginPage() {
     setLoading(true);
 
     try {
-      // ✅ Login server route orqali (HttpOnly cookie set bo'ladi)
-      const res = await fetch("/api/auth/login", {
+      const res = await fetch("https://admin-crm.onrender.com/api/auth/sign-in", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email: email.trim(), password }),
