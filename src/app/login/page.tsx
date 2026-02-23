@@ -22,9 +22,16 @@ export default function LoginPage() {
         body: JSON.stringify({ email: email.trim(), password }),
       });
 
+<<<<<<< HEAD
       const data = await res.json().catch(() => ({} as any));
 
       if (!res.ok) {
+=======
+      const data = await res.json().catch(() => ({}));
+
+      if (!res.ok) {
+        // ✅ backend xatoni to‘liq ko‘ramiz
+>>>>>>> 5541485 (news)
         console.log("LOGIN ERROR:", data);
         throw new Error(data?.message || "Login xato");
       }

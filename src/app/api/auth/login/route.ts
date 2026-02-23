@@ -17,12 +17,18 @@ export async function POST(req: Request) {
       );
     }
 
+<<<<<<< HEAD
     const r = await fetch(`${BACKEND_URL}https://admin-crm.onrender.com/api/auth/sign-in`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
         Accept: "application/json",
       },
+=======
+    const r = await fetch(BACKEND_LOGIN_URL, {
+      method: "POST",
+      headers: { "Content-Type": "application/json", Accept: "application/json" },
+>>>>>>> 5541485 (news)
       body: JSON.stringify({
         email: body.email.trim(),
         password: body.password,
@@ -33,11 +39,15 @@ export async function POST(req: Request) {
 
     if (!r.ok) {
       return NextResponse.json(
+<<<<<<< HEAD
         {
           ok: false,
           status: r.status,
           message: data?.message || data?.error || "Login xato",
         },
+=======
+        { ok: false, status: r.status, message: data?.message || "Login xato" },
+>>>>>>> 5541485 (news)
         { status: r.status }
       );
     }
@@ -55,7 +65,11 @@ export async function POST(req: Request) {
       sameSite: "lax",
       secure: process.env.NODE_ENV === "production",
       path: "/",
+<<<<<<< HEAD
       maxAge: 60 * 60 * 24, // 1 kun
+=======
+      maxAge: 60 * 60 * 24,
+>>>>>>> 5541485 (news)
     });
 
     if (data?.refresh_token) {
@@ -75,4 +89,8 @@ export async function POST(req: Request) {
       { status: 500 }
     );
   }
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> 5541485 (news)
